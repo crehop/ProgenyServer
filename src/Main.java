@@ -18,6 +18,7 @@ import com.esotericsoftware.kryonet.Server;
 
 public class Main {
 	static int packets = 0;
+	static Packet1Connect packet1;
 
 	public static void main(String[] args) throws IOException {
 		Server server = new Server();
@@ -40,8 +41,11 @@ public class Main {
 	        public void received (Connection connection, Object object) {
 	        	if(object instanceof Packet){
 	        		if(object instanceof Packet1Connect){
-	        			Packet1Connect packet1 = (Packet1Connect)object;
+	        			System.out.println();
+	        			packet1 = (Packet1Connect)object;
 	        			System.out.println(packet1.getName());
+	        			packet1.setName(" Welcome to HopNet " + packet1.getName() + " !");
+	        			server.sendToUDP(connection.getID(), packet1);
 	        		}
 	        	}
 	        	packets++;
