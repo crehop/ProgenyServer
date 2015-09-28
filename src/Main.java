@@ -48,14 +48,9 @@ public class Main {
 	        			packet1 = (Packet1Connect)object;
 	        			packet1.logout(true);
 	    	        	System.out.println("PACKET! " + packets + " " + object.getClass() +" " + packet1.logout());
-	        			if(username.equals(packet1.getUsername())){
-	        				if(password.equals(packet1.getPassword())){
-	        					packet1.logout(false);
-	        				}
-	        			}
+	    	        	confirmLogin(packet1.getUsername(), packet1.getPassword());
 	    	        	System.out.println("PACKET! " + packets + " " + object.getClass() +" " + packet1.logout());
 	        			System.out.println(packet1.getUsername());
-	        			packet1.setUsername(" Welcome to HopNet " + packet1.getUsername() + " !");
 	        		    try {
 	        		        BufferedWriter out = new BufferedWriter(new FileWriter("database/users.txt"));
 	        		            for (int i = 0; i < 4; i++) {
@@ -74,6 +69,14 @@ public class Main {
 	        	System.out.println("PACKET! " + packets + " " + object.getClass());
 	        }
 	     });
+	}
+
+	protected static void confirmLogin(String username2, String password2) {
+		if(username.equals(packet1.getUsername())){
+			if(password.equals(packet1.getPassword())){
+				packet1.logout(false);
+			}
+		}
 	}
 
 }
