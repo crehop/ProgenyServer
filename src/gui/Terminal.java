@@ -23,7 +23,7 @@ public class Terminal extends GUI{
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		this.setSize(600, 480);
+		this.setSize(300, 700);
 	}
 	
 }
