@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 
 import packets.Packet;
 import packets.Packet1Connect;
+import packets.Packet7WorldCreation;
+import world.WorldCreation;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -21,6 +23,7 @@ import com.esotericsoftware.kryonet.Server;
 public class Main {
 	static int packets = 0;
 	static Packet1Connect packet1;
+	static Packet7WorldCreation packet7;
 	static String password = "password";
 	static String username = "crehop";
 
@@ -36,9 +39,14 @@ public class Main {
 		//REGISTER THE CLASS!
 		server.getKryo().register(Packet.class);
 		server.getKryo().register(Packet1Connect.class);
+		server.getKryo().register(Packet7WorldCreation.class);
+		server.getKryo().register(Integer[][].class);
+		server.getKryo().register(Integer[].class);
 		
 		//INITIATE THE GUI
 		Terminal terminal = new Terminal();
+		
+		WorldCreation.initializeWorld();
 		
 		//WHEN PACKET SENT, THIS FUNCTION RUNS
 	    server.addListener(new Listener() {
@@ -47,9 +55,7 @@ public class Main {
 	        		if(object instanceof Packet1Connect){
 	        			packet1 = (Packet1Connect)object;
 	        			packet1.logout(true);
-	    	        	System.out.println("PACKET! " + packets + " " + object.getClass() +" " + packet1.logout());
 	    	        	confirmLogin(packet1.getUsername(), packet1.getPassword());
-	    	        	System.out.println("PACKET! " + packets + " " + object.getClass() +" " + packet1.logout());
 	        			System.out.println(packet1.getUsername());
 	        		    try {
 	        		        BufferedWriter out = new BufferedWriter(new FileWriter("database/users.txt"));
@@ -63,10 +69,15 @@ public class Main {
 	        		    }
 	        			server.sendToUDP(connection.getID(), packet1);
 	        			
+	        		}else if(object instanceof Packet7WorldCreation){
+	        			System.out.println("WORLD PACKET CONFIRMED");
+	        			packet7 = new Packet7WorldCreation(WorldCreation.getChunks());
+	        			server.sendToUDP(connection.getID(), packet7);
 	        		}
+
 	        	}
 	        	packets++;
-	        	System.out.println("PACKET! " + packets + " " + object.getClass());
+	        	System.out.println("PACKET: " + object.toString() + " " + packets);
 	        }
 	     });
 	}
@@ -78,5 +89,4 @@ public class Main {
 			}
 		}
 	}
-
 }
