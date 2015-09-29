@@ -17,8 +17,8 @@ public class WorldCreation {
 	private static final int OBSIDIAN = 9;
 	private static final int LAVA = 10;
 	
-	private static int worldX = 1;
-	private static int worldY = 10;
+	private static int worldX = 10;
+	private static int worldY = 100;
 	
 	private static int airTop = 100;
 	private static int airBottom = 90;
@@ -31,29 +31,53 @@ public class WorldCreation {
 	private static int deepWaterTop = 59;
 	private static int deepWaterBottom = 45;
 	private static int floorWaterTop = 44;
-	private static int floorWaterBottom = 20;
-	private static int sandTop = 19;
-	private static int sandBottom = 17;
-	private static int rockTop = 16;
-	private static int rockBottom = 13;
-	private static int obsidianTop = 12;
-	private static int obsidianBottom = 12;
-	private static int lavaTop = 11;
-	private static int LavaBottom = 0;
-	private static String xy = "00";
+	private static int floorWaterBottom = 21;
+	private static int sandTop = 20;
+	private static int sandBottom = 18;
+	private static int dirtTop = 17;
+	private static int dirtBottom = 16;
+	private static int rockTop = 15;
+	private static int rockBottom = 4;
+	private static int obsidianTop = 3;
+	private static int obsidianBottom = 1;
+	private static int lavaTop = 0;
+	private static int lavaBottom = 0;
 	
 	private static Integer[][] chunkArray = new Integer[worldX][worldY];
 	
 	public static void initializeWorld(){
-		System.out.println("WORLD GENERATIONS BEGINING \nWorld X size = " + chunkArray.length + "\nWorld Y size = " + chunkArray[0].length);
-		for(int x = 0; x < worldX; x++){
-			for(int y = 0; y < worldY; y++){
+		for(int y = 0; y < worldY; y++){
+			for(int x = 0; x < worldX; x++){
 				chunkArray[x][y] = findChunkType(y);
 			}
+			System.out.println("" + y);
 		}
 	}
 	private static Integer findChunkType(int y){
-		return 0;
+		if(y <= airTop &&  y >= airBottom){
+			return AIR;
+		}else if(y <= topWaterTop && y >= topWaterBottom){
+			return TOP_WATER_LAYER;
+		}else if(y <= shallowWaterTop && y >= shallowWaterBottom){
+			return SHALLOW_WATER;
+		}else if(y <= waterTop && y >= waterBottom){
+			return WATER;
+		}else if(y <= deepWaterTop && y >= deepWaterBottom){
+			return DEEP_WATER;
+		}else if(y <= floorWaterTop && y >= floorWaterBottom){
+			return FLOOR_WATER;
+		}else if(y <= sandTop && y >= sandBottom){
+			return SAND;
+		}else if(y <= dirtTop && y >= dirtBottom){
+			return DIRT;
+		}else if(y <= rockTop && y >= rockBottom){
+			return ROCK;
+		}else if(y <= obsidianTop && y >= obsidianBottom){
+			return OBSIDIAN;
+		}else if(y <= lavaTop && y >= lavaBottom){
+			return LAVA;
+		}
+		return AIR;
 	}
 	
 	public static Integer[][] getChunks(){

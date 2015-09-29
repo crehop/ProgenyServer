@@ -72,7 +72,6 @@ public class Main {
 
 	        	}
 	        	packets++;
-	        	System.out.println("PACKET: " + object.toString() + " " + packets);
 	        }
 	     });
 	}
