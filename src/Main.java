@@ -1,14 +1,9 @@
 
-import gui.GUI;
 import gui.Terminal;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import packets.Packet;
 import packets.Packet1Connect;
