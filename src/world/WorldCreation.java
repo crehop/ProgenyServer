@@ -1,9 +1,5 @@
 package world;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class WorldCreation {
 	private static final int AIR = 0;
 	private static final int TOP_WATER_LAYER = 1;
@@ -17,8 +13,8 @@ public class WorldCreation {
 	private static final int OBSIDIAN = 9;
 	private static final int LAVA = 10;
 	
-	private static int worldX = 10;
 	private static int worldY = 100;
+	private static int worldX = 27500;
 	
 	private static int airTop = 100;
 	private static int airBottom = 90;
@@ -43,14 +39,11 @@ public class WorldCreation {
 	private static int lavaTop = 0;
 	private static int lavaBottom = 0;
 	
-	private static Integer[][] chunkArray = new Integer[worldX][worldY];
+	private static Integer[][] chunkArray = new Integer[1][worldY];
 	
 	public static void initializeWorld(){
-		for(int y = 0; y < worldY; y++){
-			for(int x = 0; x < worldX; x++){
-				chunkArray[x][y] = findChunkType(y);
-			}
-			System.out.println("" + y);
+		for(int y = 0; y < chunkArray[0].length; y++){
+			chunkArray[0][y] = findChunkType(y);
 		}
 	}
 	private static Integer findChunkType(int y){
@@ -82,5 +75,8 @@ public class WorldCreation {
 	
 	public static Integer[][] getChunks(){
 		return chunkArray;
+	}
+	public static int getWorldWidth() {
+		return worldX;
 	}
 }

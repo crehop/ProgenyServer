@@ -66,7 +66,7 @@ public class Main {
 	        			
 	        		}else if(object instanceof Packet7WorldCreation){
 	        			System.out.println("WORLD PACKET CONFIRMED");
-	        			packet7 = new Packet7WorldCreation(WorldCreation.getChunks());
+	        			packet7 = new Packet7WorldCreation(WorldCreation.getChunks(), WorldCreation.getWorldWidth());
 	        			server.sendToUDP(connection.getID(), packet7);
 	        		}
 
