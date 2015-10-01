@@ -42,7 +42,11 @@ public class Neuron {
 		input *= -1;
 	}
 	public void initiate(){
-		while(this.outConnections.size() < network.getRandom().nextInt(10)){
+		Neuron random = network.getRandomNeuron();
+		while(this.outConnections.size() < network.getRandom().nextInt(10) + 2){
+			while(this.outConnections.contains(random)){
+				random = network.getRandomNeuron();
+			}
 			this.outConnections.add(new SynapseConnection(this,network.getRandomNeuron()));
 		}
 	}
@@ -64,19 +68,22 @@ public class Neuron {
 			this.connected = true;
 			this.outConnections.clear();
 		}else{
-			Neuron neu = network.getRandomNeuron();
 			int count = 0;
-			while(this.connected == false && count < 10){
+			while(this.connected == false && this.type != 3){
 				count++;
-				System.out.println("LOOKING FOR CONNECTION ===============================================");
-				while(this.equals(neu)){
-					System.out.println("LOOKING FOR COMPAT ===============================================");
-					neu = network.getRandomNeuron();
-				}
-				this.outConnections.add(new SynapseConnection(this,neu));
-				pulse(100000,1);
+				//System.out.println("LOOKING FOR CONNECTION ===============================================");
+				establishNewConnection();
 			}
 		}
+	}
+	private void establishNewConnection() {
+		Neuron neu = network.getRandomNeuron();
+		while(this.equals(neu)){
+			//System.out.println("LOOKING FOR COMPAT ===============================================");
+			neu = network.getRandomNeuron();
+		}
+		this.outConnections.add(new SynapseConnection(this,neu));
+		pulse(1000,1);		
 	}
 	public boolean isConnected(){
 		return connected;

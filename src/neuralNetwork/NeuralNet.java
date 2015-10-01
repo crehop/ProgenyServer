@@ -9,7 +9,7 @@ public class NeuralNet {
 	private ArrayList<Neuron> computationalNeurons = new ArrayList<Neuron>();
 	private ArrayList<Neuron> inputNeurons = new ArrayList<Neuron>();
 	private ArrayList<Neuron> outputNeurons = new ArrayList<Neuron>();	
-	private int computationalNetworkSize = 10;
+	private int computationalNetworkSize = 1000;
 	private int inputSize = 5;
 	private int outputSize = 5;
 	private Random rand = new Random();

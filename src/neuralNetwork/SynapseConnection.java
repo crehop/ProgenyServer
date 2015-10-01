@@ -49,6 +49,7 @@ public class SynapseConnection {
 			System.out.println("SP FROM:" + from.toString() + " TO:" + to.toString() + " END TOTAL JUMPS:"+ jumps);
 		}else if(intensity > 10.0f){
 			to.pulse((float)(intensity/++this.jumps), this.jumps);
+			System.out.println("SP FROM:" + from.toString() + " TO:" + to.toString() + " END TOTAL JUMPS:"+ jumps);
 		}else{
 			
 		}
