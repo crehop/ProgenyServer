@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import neuralNetwork.NeuralNet;
 import packets.Packet;
 import packets.Packet1Connect;
 import packets.Packet7WorldCreation;
@@ -40,7 +41,8 @@ public class Main {
 		
 		//INITIATE THE GUI
 		Terminal terminal = new Terminal();
-		
+		NeuralNet asimov = new NeuralNet();
+		asimov.activateNetwork();
 		WorldCreation.initializeWorld();
 		
 		//WHEN PACKET SENT, THIS FUNCTION RUNS

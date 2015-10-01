@@ -1,32 +1,57 @@
 package neuralNetwork;
 
-public abstract class Neuron {
+import java.util.ArrayList;
+
+public class Neuron {
 	//input and output should be between 0-1;
+	private int type;
 	private float input;
-	private float pleasure = 0;
-	private float pain = 0;
-	private boolean back;
-	private boolean gate;
-	private boolean flipped;
-	public Neuron(float input){
+	private float output;
+	private int layer;
+	private ArrayList<SynapseConnection> inConnections  = new ArrayList<SynapseConnection>();;
+	private ArrayList<SynapseConnection> outConnections = new ArrayList<SynapseConnection>();;
+	private NeuralNet network;
+	//SIGMOID NEURONS
+	//
+	public Neuron(NeuralNet network){
+		this.network = network;
+	}
+	public void excite(float input){
+		this.maintainConnections();
+		this.output = 0;
+		for(SynapseConnection incoming:inConnections){
+			this.output +=  (incoming.getFrom().getOutput() * incoming.getStrength());
+		}
+		this.output = this.output/inConnections.size();
+	}
+	private float getOutput() {
+		return output;
+	}
+	private void maintainConnections() {
+		while(this.outConnections.size()<2){
+			this.outConnections.add(new SynapseConnection(this,network.getRandomNeuron()));
+		}
+	}
+	public void inhibit(float input){
 		this.input = input/100;
-		if(input < 1){
+		if(input > 0){
 			flip();
 		}
-		this.fire(input);
-	}
-	public float fire(float input){
-		return 0;
 	}
 	public void flip(){
 		input *= -1;
-		flipped = true;
-	}
-	public void setPain(float pain){
-		this.pain = pain;
 	}
 	public void setPleasure(float pleasure){
 		this.setPleasure(pleasure);
 	}
-	public abstract float getOutput();
+	public int getTotalConnections(){
+		return this.inConnections.size() + this.outConnections.size();
+	}
+	
+	public int getLayer(){
+		return this.layer;
+	}
+	public int getType(){
+		return this.type;
+	}
 }
