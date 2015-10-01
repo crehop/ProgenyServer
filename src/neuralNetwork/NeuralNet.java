@@ -22,31 +22,63 @@ public class NeuralNet {
 		for(int i = 0; i < outputSize; i++){
 			outputNeurons.add(new Neuron(this));
 		}
-		for(Neuron neu:inputNeurons){
+		for(Neuron neu:outputNeurons){
 			neu.initiate();
 		}
-		for(Neuron neu:outputNeurons){
+		for(Neuron neu:inputNeurons){
 			neu.initiate();
 		}
 		for(Neuron neu:computationalNeurons){
 			neu.initiate();
+		}
+		int synapses = 0;
+		int unconnected = -1;
+		for(Neuron neu:outputNeurons){
+			neu.setType(3);
+			synapses += neu.getTotalConnections();
+		}
+		for(Neuron neu:computationalNeurons){
+			neu.setType(2);
+			synapses += neu.getTotalConnections();
+		}
+		for(Neuron neu:inputNeurons){
+			neu.setType(1);
+			synapses += neu.getTotalConnections();
+		}
+		for(Neuron neu:outputNeurons){
+			if(neu.isConnected()){
+				
+			}else{
+				unconnected++;
+			}
+		}
+		for(Neuron neu:computationalNeurons){
+			if(neu.isConnected()){
+				
+			}else{
+				unconnected++;
+			}
+		}
+		for(Neuron neu:inputNeurons){
+			if(neu.isConnected()){
+				
+			}else{
+				unconnected++;
+			}
 		}
 		System.out.println("SUCCESS!!\nComputational = " + computationalNeurons.size() + "\nInput = "+ inputNeurons.size() + "\nOutput = " + outputNeurons.size());
-		int synapses = 0;
-		for(Neuron neu:computationalNeurons){
-			synapses += neu.getTotalConnections();
-		}
-		for(Neuron neu:inputNeurons){
-			synapses += neu.getTotalConnections();
-		}
-		for(Neuron neu:outputNeurons){
-			synapses += neu.getTotalConnections();
-		}
 		System.out.println("TOTAL SYNAPSES = " + synapses);
+		System.out.println("TOTAL UNCONNECTED SYNAPSES = " + unconnected);
 	}
 
 	public Neuron getRandomNeuron() {
-		return computationalNeurons.get(rand.nextInt(computationalNetworkSize - 1));
+		if(rand.nextFloat() > 0.9){
+			return outputNeurons.get(rand.nextInt(outputSize));
+		}
+		if(rand.nextFloat() > 0.1){
+			return inputNeurons.get(rand.nextInt(inputSize));
+		}
+		return computationalNeurons.get(rand.nextInt(computationalNetworkSize));
 	}
 	public Random getRandom(){
 		return rand;
