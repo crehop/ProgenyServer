@@ -9,7 +9,7 @@ public class NeuralNet {
 	private ArrayList<Neuron> computationalNeurons = new ArrayList<Neuron>();
 	private ArrayList<Neuron> inputNeurons = new ArrayList<Neuron>();
 	private ArrayList<Neuron> outputNeurons = new ArrayList<Neuron>();	
-	private int computationalNetworkSize = 1000;
+	private int computationalNetworkSize = 5;
 	private int inputSize = 5;
 	private int outputSize = 5;
 	private Random rand = new Random();
@@ -91,7 +91,7 @@ public class NeuralNet {
 		JOptionPane.showMessageDialog(null, "SEND PULSE 30");
 		System.out.println("30 PULSE============================================================================================================================");
 		for(Neuron neu:inputNeurons){
-			neu.pulseOut(30000,1);
+			neu.pulseForward(30,1);
 		}
 		unconnected = 0;
 		for(Neuron neu:inputNeurons){
@@ -104,7 +104,7 @@ public class NeuralNet {
 		System.out.println("100 PULSE============================================================================================================================");
 		JOptionPane.showMessageDialog(null, "SEND PULSE 100");
 		for(Neuron neu:computationalNeurons){
-			neu.pulseOut(1000,1);
+			neu.pulseForward(100,1);
 		}
 		unconnected = 0;
 		System.out.println("TOTAL UNCONNECTED SYNAPSES = " + unconnected);

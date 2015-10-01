@@ -6,7 +6,7 @@ public class SynapseConnection {
 	private int connectionStrength = 155;
 	private int ID = 0;
 	private int jumps = 1;
-	private boolean kill;
+	private boolean connected;
 	
 	public SynapseConnection(Neuron from, Neuron to){
 		from.addTo(this);
@@ -19,6 +19,11 @@ public class SynapseConnection {
 		}
 		if(from.isConnectedIn() && to.isConnectedIn() == false){
 			to.setConnectedIn(true);
+		}
+		if(to.isConnectedIn() && from.isConnectedIn()){
+			this.connected = true;
+		}else{
+			this.connected = false;
 		}
 	}
 	public Neuron getFrom() {
@@ -36,20 +41,44 @@ public class SynapseConnection {
 	public float getStrength() {
 		return this.connectionStrength/100000;
 	}
-	public void pulseOut(float intensity, int jumps) {
+	public void pulseForward(float intensity, int jumps) {
+		if(to.isConnectedIn() && from.isConnectedIn()){
+			this.connected = true;
+		}else{
+			this.connected = false;
+		}
+		if(!connected){
+			this.pulseForwardInitialize(intensity,jumps);
+		}else if(intensity > 10.0f){
+			to.pulseForward((float)(intensity/++this.jumps), this.jumps);
+			System.out.println(intensity + "SP OUT CONNECTED FORWARD:" + from.toString() + " TO:" + to.toString() + " END TOTAL JUMPS:"+ jumps);
+		}
+	}
+	public void pulseBack(float intensity, int jumps) {
+		if(to.isConnectedIn() && from.isConnectedIn()){
+			this.connected = true;
+		}else{
+			this.connected = false;
+		}
+		if(!connected){
+			this.pulseBackInitialize(intensity,jumps);
+		}else if(intensity > 10.0f){
+			to.pulseForward((float)(intensity/++this.jumps), this.jumps);
+			System.out.println(intensity + "SP IN CONNECTED BACK:" + from.toString() + " TO:" + to.toString() + " END TOTAL JUMPS:"+ jumps);
+		}
+	}
+	private void pulseForwardInitialize(float intensity, int jumps) {
 		this.jumps = jumps;
 		if(to.isConnectedOut()){
 			from.setConnectedOut(true);
 			ID++;
 			System.out.println("SP OUT FROM1:" + from.toString() + " TO:" + to.toString() + " END TOTAL JUMPS:"+ jumps);
 		}else if(intensity > 10.0f){
-			to.pulseOut((float)(intensity/++this.jumps), this.jumps);
+			to.pulseForward((float)(intensity/++this.jumps), this.jumps);
 			System.out.println("SP OUT FROM2:" + from.toString() + " TO:" + to.toString() + " END TOTAL JUMPS:"+ jumps);
-		}else{
-			
 		}
 	}
-	public void pulseBack(float intensity, int jumps) {
+	public void pulseBackInitialize(float intensity, int jumps) {
 		System.out.println("CODE REACHED");
 		this.jumps = jumps + 1;
 		if(from.isConnectedIn()){
@@ -68,5 +97,8 @@ public class SynapseConnection {
 	}
 	public void inhibit(){
 		
+	}
+	public boolean connected(){
+		return this.connected;
 	}
 }

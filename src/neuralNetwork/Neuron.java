@@ -93,10 +93,10 @@ public class Neuron {
 		}
 		if(in){
 			this.outConnections.add(new SynapseConnection(this,neu));
-			pulseOut(1000,1);		
+			pulseForward(1000,1);		
 		}else{
 			this.inConnections.add(new SynapseConnection(neu,this));
-			pulseBack(100,1);
+			pulseBack(1000,1);
 		}
 	}
 	public boolean isConnectedOut(){
@@ -113,10 +113,10 @@ public class Neuron {
 		System.out.println(""+ outConnections.size());
 	}
 
-	public void pulseOut(float f, int jump){
+	public void pulseForward(float f, int jump){
 		if(f > 10.0f){
 			for(SynapseConnection connect:this.outConnections){
-				connect.pulseOut(f,jump);
+				connect.pulseForward(f,jump);
 			}
 		}
 		ID = 0;
