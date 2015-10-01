@@ -28,9 +28,7 @@ public class Neuron {
 		return output;
 	}
 	private void maintainConnections() {
-		while(this.outConnections.size()<2){
-			this.outConnections.add(new SynapseConnection(this,network.getRandomNeuron()));
-		}
+
 	}
 	public void inhibit(float input){
 		this.input = input/100;
@@ -53,5 +51,10 @@ public class Neuron {
 	}
 	public int getType(){
 		return this.type;
+	}
+	public void initiate(){
+		while(this.outConnections.size() < network.getRandom().nextInt(10)){
+			this.outConnections.add(new SynapseConnection(this,network.getRandomNeuron()));
+		}
 	}
 }

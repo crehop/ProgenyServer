@@ -6,15 +6,14 @@ import java.util.Random;
 public class NeuralNet {
 	private ArrayList<Neuron> computationalNeurons = new ArrayList<Neuron>();
 	private ArrayList<Neuron> inputNeurons = new ArrayList<Neuron>();
-	private ArrayList<Neuron> outputNeurons = new ArrayList<Neuron>();
-	Random rand = new Random();
-	
+	private ArrayList<Neuron> outputNeurons = new ArrayList<Neuron>();	
 	private int computationalNetworkSize = 10;
 	private int inputSize = 5;
 	private int outputSize = 5;
+	private Random rand = new Random();
 	
 	public void activateNetwork(){
-		for(int i = 0; i < computationalNetworkSize - 1; i++){
+		for(int i = 0; i < computationalNetworkSize; i++){
 			computationalNeurons.add(new Neuron(this));
 		}
 		for(int i = 0; i < inputSize; i++){
@@ -23,15 +22,14 @@ public class NeuralNet {
 		for(int i = 0; i < outputSize; i++){
 			outputNeurons.add(new Neuron(this));
 		}
-		
 		for(Neuron neu:inputNeurons){
-			neu.excite(1f);
+			neu.initiate();
 		}
 		for(Neuron neu:outputNeurons){
-			neu.excite(1f);
+			neu.initiate();
 		}
 		for(Neuron neu:computationalNeurons){
-			neu.excite(1f);
+			neu.initiate();
 		}
 		System.out.println("SUCCESS!!\nComputational = " + computationalNeurons.size() + "\nInput = "+ inputNeurons.size() + "\nOutput = " + outputNeurons.size());
 		int synapses = 0;
@@ -49,5 +47,8 @@ public class NeuralNet {
 
 	public Neuron getRandomNeuron() {
 		return computationalNeurons.get(rand.nextInt(computationalNetworkSize - 1));
+	}
+	public Random getRandom(){
+		return rand;
 	}
 }
