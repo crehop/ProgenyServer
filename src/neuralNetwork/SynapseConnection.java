@@ -33,15 +33,6 @@ public class SynapseConnection {
 	public void setTo(Neuron to) {
 		this.to = to;
 	}
-	public void feedback(float pleasure){
-		this.connectionStrength += pleasure;
-		if(this.connectionStrength > 1000){
-			this.connectionStrength = 1000;
-		}
-		if(this.connectionStrength < -1000){
-			this.connectionStrength = -1000;
-		}
-	}
 	public float getStrength() {
 		return this.connectionStrength/100000;
 	}
@@ -71,5 +62,11 @@ public class SynapseConnection {
 		}else{
 			
 		}
+	}
+	public void excite(){
+		
+	}
+	public void inhibit(){
+		
 	}
 }

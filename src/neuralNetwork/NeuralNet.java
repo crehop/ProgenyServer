@@ -107,6 +107,7 @@ public class NeuralNet {
 			neu.pulseOut(1000,1);
 		}
 		unconnected = 0;
+		System.out.println("TOTAL UNCONNECTED SYNAPSES = " + unconnected);
 	}
 
 	public Neuron getRandomNeuron() {
