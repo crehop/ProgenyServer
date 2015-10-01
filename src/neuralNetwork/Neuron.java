@@ -62,11 +62,19 @@ public class Neuron {
 		this.type = type;
 		if(this.type == 3){
 			this.connected = true;
+			this.outConnections.clear();
 		}else{
-			while(this.connected == false){
-				System.out.println("Attempted Pulse: " + this.toString());
-				this.outConnections.add(new SynapseConnection(this,network.getRandomNeuron()));
-				pulse(100f);
+			Neuron neu = network.getRandomNeuron();
+			int count = 0;
+			while(this.connected == false && count < 10){
+				count++;
+				System.out.println("LOOKING FOR CONNECTION ===============================================");
+				while(this.equals(neu)){
+					System.out.println("LOOKING FOR COMPAT ===============================================");
+					neu = network.getRandomNeuron();
+				}
+				this.outConnections.add(new SynapseConnection(this,neu));
+				pulse(100000,1);
 			}
 		}
 	}
@@ -76,17 +84,25 @@ public class Neuron {
 	public void setConnected(boolean connected){
 		this.connected = connected;
 		if(connected){
+			//System.out.println("CONNECTION FOUND =========================================================");
 			for(SynapseConnection connection:this.inConnections){
 				connection.getFrom().setConnected(true);
 			}
 		}
 	}
 
-	public void pulse(float f){
-		for(SynapseConnection connect:this.outConnections){
-			System.out.println("PULSE:" + ID++ + " " + this.toString());
-			connect.pulse(f);
+	public void pulse(float f, int jump){
+		if(f > 10.0f){
+			for(SynapseConnection connect:this.outConnections){
+				connect.pulse(f,jump);
+			}
 		}
 		ID = 0;
+	}
+	public void clearOutPut() {
+		this.outConnections.clear();
+	}
+	public NeuralNet getNetwork() {
+		return this.network;
 	}
 }
