@@ -39,7 +39,17 @@ public class NeuralNet {
 		int unconnected = 0;
 		int chain = 0;
 		for(Neuron neu:outputNeurons){
+			System.out.println("INITIATING OUTPUT NEURONS");
 			neu.setType(3);
+			neurons++;
+			synapses += neu.getTotalConnections();
+			if(chain < neu.getTotalConnections()){
+				chain = neu.getTotalConnections();
+			}
+		}
+		for(Neuron neu:inputNeurons){
+			System.out.println("INITIATING INPUT NEURONS");
+			neu.setType(1);
 			neurons++;
 			synapses += neu.getTotalConnections();
 			if(chain < neu.getTotalConnections()){
@@ -54,29 +64,21 @@ public class NeuralNet {
 				chain = neu.getTotalConnections();
 			}
 		}
-		for(Neuron neu:inputNeurons){
-			neu.setType(1);
-			neurons++;
-			synapses += neu.getTotalConnections();
-			if(chain < neu.getTotalConnections()){
-				chain = neu.getTotalConnections();
-			}
-		}
 		for(Neuron neu:outputNeurons){
-			if(neu.isConnected()){
+			if(neu.isConnectedOut() && neu.isConnectedIn()){
 			}else{
 				unconnected++;
 			}
 		}
 		for(Neuron neu:computationalNeurons){
-			if(neu.isConnected()){
+			if(neu.isConnectedOut() && neu.isConnectedIn()){
 				
 			}else{
 				unconnected++;
 			}
 		}
 		for(Neuron neu:inputNeurons){
-			if(neu.isConnected()){
+			if(neu.isConnectedOut() && neu.isConnectedIn()){
 			}else{
 				unconnected++;
 			}
@@ -89,11 +91,11 @@ public class NeuralNet {
 		JOptionPane.showMessageDialog(null, "SEND PULSE 30");
 		System.out.println("30 PULSE============================================================================================================================");
 		for(Neuron neu:inputNeurons){
-			neu.pulse(30000,1);
+			neu.pulseOut(30000,1);
 		}
 		unconnected = 0;
 		for(Neuron neu:inputNeurons){
-			if(neu.isConnected()){
+			if(neu.isConnectedOut()){
 			}else{
 				unconnected++;
 			}
@@ -102,17 +104,9 @@ public class NeuralNet {
 		System.out.println("100 PULSE============================================================================================================================");
 		JOptionPane.showMessageDialog(null, "SEND PULSE 100");
 		for(Neuron neu:computationalNeurons){
-			neu.pulse(1000,1);
+			neu.pulseOut(1000,1);
 		}
 		unconnected = 0;
-		for(Neuron neu:inputNeurons){
-			if(neu.isConnected()){
-			}else{
-				unconnected++;
-			}
-		}
-		System.out.println("TOTAL UNCONNECTED SYNAPSES = " + unconnected);
-
 	}
 
 	public Neuron getRandomNeuron() {
