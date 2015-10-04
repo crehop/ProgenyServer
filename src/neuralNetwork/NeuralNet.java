@@ -6,120 +6,60 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 public class NeuralNet {
-	private ArrayList<Neuron> computationalNeurons = new ArrayList<Neuron>();
-	private ArrayList<Neuron> inputNeurons = new ArrayList<Neuron>();
-	private ArrayList<Neuron> outputNeurons = new ArrayList<Neuron>();	
-	private int computationalNetworkSize = 5;
-	private int inputSize = 5;
-	private int outputSize = 5;
-	private Random rand = new Random();
-	public void activateNetwork(){
-		System.out.println("ACTIVATING NEURAL NETWORK");
-		for(int i = 0; i < computationalNetworkSize; i++){
-			computationalNeurons.add(new Neuron(this));
+	private  int ID = 0;
+	public int synapseStartSize = 10;
+	private  int computationalSize = 10;
+	private  int outputSize = 5;
+	private  int inputSize = 5;
+	private  Random rand = new Random();
+	private  ArrayList<Neuron> computationalNeurons = new ArrayList<Neuron>();
+	private  ArrayList<Neuron> inputNeurons = new ArrayList<Neuron>();
+	private  ArrayList<Neuron> outputNeurons = new ArrayList<Neuron>();	
+	public  ArrayList<SynapseConnection> synapse = new ArrayList<SynapseConnection>();
+	
+	public NeuralNet(){
+	}
+	
+	public int getID(){
+		return ++ID;
+	}
+	public  Neuron getRandomNeuron() {
+		if(rand.nextInt(10) > 7){
+			System.out.println("INPUT NEURON");
+			return inputNeurons.get(rand.nextInt(inputNeurons.size()));
 		}
-		for(int i = 0; i < inputSize; i++){
-			inputNeurons.add(new Neuron(this));
+		else if(rand.nextInt(10) < 2){
+			System.out.println("OUTPUT NEURON");
+			return outputNeurons.get(rand.nextInt(outputNeurons.size()));
 		}
-		for(int i = 0; i < outputSize; i++){
-			outputNeurons.add(new Neuron(this));
+		else{
+			System.out.println("COMPUTATIONAL NEURON");
+			return computationalNeurons.get(rand.nextInt(computationalNeurons.size()));
 		}
-		for(Neuron neu:outputNeurons){
-			neu.initiate();
-			neu.clearOutPut();
-		}
-		for(Neuron neu:inputNeurons){
-			neu.initiate();
-		}
-		for(Neuron neu:computationalNeurons){
-			neu.initiate();
-		}
-		int synapses = 0;
-		int neurons = 0;
-		int unconnected = 0;
-		int chain = 0;
-		for(Neuron neu:outputNeurons){
-			System.out.println("INITIATING OUTPUT NEURONS");
-			neu.setType(3);
-			neurons++;
-			synapses += neu.getTotalConnections();
-			if(chain < neu.getTotalConnections()){
-				chain = neu.getTotalConnections();
-			}
-		}
-		for(Neuron neu:inputNeurons){
-			System.out.println("INITIATING INPUT NEURONS");
-			neu.setType(1);
-			neurons++;
-			synapses += neu.getTotalConnections();
-			if(chain < neu.getTotalConnections()){
-				chain = neu.getTotalConnections();
-			}
-		}
-		for(Neuron neu:computationalNeurons){
-			neu.setType(2);
-			neurons++;
-			synapses += neu.getTotalConnections();
-			if(chain < neu.getTotalConnections()){
-				chain = neu.getTotalConnections();
-			}
-		}
-		for(Neuron neu:outputNeurons){
-			if(neu.isConnectedOut() && neu.isConnectedIn()){
-			}else{
-				unconnected++;
-			}
-		}
-		for(Neuron neu:computationalNeurons){
-			if(neu.isConnectedOut() && neu.isConnectedIn()){
-				
-			}else{
-				unconnected++;
-			}
-		}
-		for(Neuron neu:inputNeurons){
-			if(neu.isConnectedOut() && neu.isConnectedIn()){
-			}else{
-				unconnected++;
-			}
-		}
-		System.out.println("SUCCESS!!\nComputational = " + computationalNeurons.size() + "\nInput = "+ inputNeurons.size() + "\nOutput = " + outputNeurons.size());
-		System.out.println("TOTAL SYNAPSES = " + synapses);
-		System.out.println("TOTAL NEURONS = " + neurons);
-		System.out.println("TOTAL UNCONNECTED SYNAPSES = " + unconnected);
-		System.out.println("longest Synapse chain = " + chain);
-		JOptionPane.showMessageDialog(null, "SEND PULSE 30");
-		System.out.println("30 PULSE============================================================================================================================");
-		for(Neuron neu:inputNeurons){
-			neu.pulseForward(30,1);
-		}
-		unconnected = 0;
-		for(Neuron neu:inputNeurons){
-			if(neu.isConnectedOut()){
-			}else{
-				unconnected++;
-			}
-		}
-		System.out.println("TOTAL UNCONNECTED SYNAPSES = " + unconnected);
-		System.out.println("100 PULSE============================================================================================================================");
-		JOptionPane.showMessageDialog(null, "SEND PULSE 100");
-		for(Neuron neu:computationalNeurons){
-			neu.pulseForward(100,1);
-		}
-		unconnected = 0;
-		System.out.println("TOTAL UNCONNECTED SYNAPSES = " + unconnected);
 	}
 
-	public Neuron getRandomNeuron() {
-		if(rand.nextFloat() > 0.8){
-			return outputNeurons.get(rand.nextInt(outputSize));
+	public void activateNetwork() {
+		for(int i = 0; i < inputSize; i++){
+			Neuron neuron = new Neuron(1, this);
+			inputNeurons.add(neuron);
 		}
-		if(rand.nextFloat() > 0.2){
-			return inputNeurons.get(rand.nextInt(inputSize));
+		for(int i = 0; i < outputSize; i++){
+			Neuron neuron = new Neuron(3, this);
+			outputNeurons.add(neuron);
 		}
-		return computationalNeurons.get(rand.nextInt(computationalNetworkSize));
-	}
-	public Random getRandom(){
-		return rand;
+		for(int i = 0; i < computationalSize; i++){
+			Neuron neuron = new Neuron(2, this);
+			computationalNeurons.add(neuron);
+		}
+		for(Neuron neuron:inputNeurons){
+			neuron.pulseForward(1, 1);
+		}
+		for(Neuron neuron:computationalNeurons){
+			neuron.pulseForward(1, 1);
+		}
+		for(Neuron neuron:outputNeurons){
+			neuron.pulseBack(1, 1);
+		}
+		System.out.println("NETWORK CREATION SUCCESSFUL!");		
 	}
 }
