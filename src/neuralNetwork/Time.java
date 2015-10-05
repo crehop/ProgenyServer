@@ -1,11 +1,11 @@
 package neuralNetwork;
 
-import progeny.Progeny;
+//import progeny.Progeny;
 
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
+//import com.badlogic.gdx.utils.Timer;
+//import com.badlogic.gdx.utils.Timer.Task;
 
-public class Time {
+public class Time {/*
 	public static Timer timer = new Timer();
 	public static float time = 0;
 	public static Task task;
@@ -33,5 +33,5 @@ public class Time {
 			return true;
 		}
 		return false;
-	}
+	}*/
 }

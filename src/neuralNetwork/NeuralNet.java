@@ -7,8 +7,9 @@ import javax.swing.JOptionPane;
 
 public class NeuralNet {
 	private  int ID = 0;
-	public int synapseStartSize = 10;
-	private  int computationalSize = 10;
+	public  int synapseInSize = 10;
+	public  int synapseOutSize = 10;
+	private  int computationalSize = 100;
 	private  int outputSize = 5;
 	private  int inputSize = 5;
 	private  Random rand = new Random();
@@ -18,6 +19,7 @@ public class NeuralNet {
 	public  ArrayList<SynapseConnection> synapse = new ArrayList<SynapseConnection>();
 	
 	public NeuralNet(){
+		//TODO DIRECTIONAL TRAVEL < implement time so jumps cant propigate backwards;
 	}
 	
 	public int getID(){
@@ -52,14 +54,44 @@ public class NeuralNet {
 			computationalNeurons.add(neuron);
 		}
 		for(Neuron neuron:inputNeurons){
-			neuron.pulseForward(1, 1);
+			neuron.pulse(1, 1, true);
 		}
 		for(Neuron neuron:computationalNeurons){
-			neuron.pulseForward(1, 1);
+			neuron.pulse(1, 1, true);
 		}
 		for(Neuron neuron:outputNeurons){
-			neuron.pulseBack(1, 1);
+			neuron.pulse(1, 1, true);
 		}
 		System.out.println("NETWORK CREATION SUCCESSFUL!");		
+		JOptionPane.showMessageDialog(null, " PRESS TO PULSE 10 FORWARD" );
+		for(Neuron neuron: this.inputNeurons){
+			neuron.pulse(10.0f, 1,true);
+		}
+		JOptionPane.showMessageDialog(null, " PRESS TO PULSE 50 FORWARD" );
+		for(Neuron neuron: this.inputNeurons){
+			neuron.pulse(50.0f, 1,true);
+		}
+		JOptionPane.showMessageDialog(null, " PRESS TO PULSE 100 FORWARD" );
+		for(Neuron neuron: this.inputNeurons){
+			neuron.pulse(100.0f, 1,true);
+		}
+		JOptionPane.showMessageDialog(null, " PRESS TO PULSE 10 BACKWARD" );
+		for(Neuron neuron: this.outputNeurons){
+			neuron.pulse(10.0f, 1, false);
+		}
+		JOptionPane.showMessageDialog(null, " PRESS TO PULSE 50 BACKWARD" );
+		for(Neuron neuron: this.outputNeurons){
+			neuron.pulse(50.0f, 1, false);
+		}
+		JOptionPane.showMessageDialog(null, " PRESS TO PULSE 100 BACKWARD" );
+		for(Neuron neuron: this.outputNeurons){
+			neuron.pulse(100.0f, 1,false);
+		}
+		
+	}
+
+	
+	public void stimulateNetwork(){
+		
 	}
 }
