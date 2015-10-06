@@ -9,7 +9,7 @@ public class NeuralNet {
 	private  int ID = 0;
 	public  int synapseInSize = 10;
 	public  int synapseOutSize = 10;
-	private  int computationalSize = 100;
+	private  int computationalSize = 1000;
 	private  int outputSize = 5;
 	private  int inputSize = 5;
 	private  Random rand = new Random();
