@@ -11,5 +11,8 @@
 	<classpathentry kind="lib" path="libs/minlog-none-1.2.jar"/>
 	<classpathentry kind="lib" path="libs/objenesis-1.2.jar"/>
 	<classpathentry kind="lib" path="libs/reflectasm-1.07.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.5.4/6b0e1e0ef1b4ee3010f4e55cceaa22ba9ace5cf2/gdx-box2d-1.5.4.jar" sourcepath="C:/Users/Tu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-bullet/1.5.4/9a9c8ae8062adfeb13531491afcf6c13cacafef9/gdx-bullet-1.5.4-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.5.3/3b8f2a7e697b097735ec8fd2b9d576d0959cb7c9/gdx-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tu/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-platform/1.5.4/a5772476b12c8e161443d990945507c6575a0ce9/gdx-box2d-platform-1.5.4-natives-desktop.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

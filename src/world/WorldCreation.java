@@ -1,5 +1,7 @@
 package world;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 public class WorldCreation {
 	private static final int AIR = 0;
 	private static final int TOP_WATER_LAYER = 1;
@@ -45,6 +47,7 @@ public class WorldCreation {
 		for(int y = 0; y < chunkArray[0].length; y++){
 			chunkArray[0][y] = findChunkType(y);
 		}
+		WorldUtils.startPhysics();
 	}
 	private static Integer findChunkType(int y){
 		if(y <= airTop &&  y >= airBottom){

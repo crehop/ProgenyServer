@@ -11,6 +11,7 @@ import packets.Packet1Connect;
 import packets.Packet7WorldCreation;
 import world.WorldCreation;
 
+import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -41,8 +42,9 @@ public class Main {
 		
 		//INITIATE THE GUI
 		Terminal terminal = new Terminal();
-		NeuralNet asimov = new NeuralNet();
-		asimov.activateNetwork();
+		Time time = new Time();
+		//NeuralNet asimov = new NeuralNet();
+		//asimov.activateNetwork();
 		WorldCreation.initializeWorld();
 		
 		//WHEN PACKET SENT, THIS FUNCTION RUNS
