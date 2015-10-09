@@ -5,7 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import neuralNetwork.NeuralNet;
+
+//import neuralNetwork.NeuralNet;
 import packets.Packet;
 import packets.Packet1Connect;
 import packets.Packet2Body;
@@ -15,8 +16,17 @@ import packets.Packet8WorldInfo;
 import world.WorldCreation;
 import world.WorldUtils;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+//import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -45,14 +55,24 @@ public class Main {
 		
 		//REGISTER THE CLASS!
 		server.getKryo().register(Packet.class);
+		server.getKryo().register(CircleShape.class);
+		server.getKryo().register(PolygonShape.class);
+		server.getKryo().register(Array.class);
+		server.getKryo().register(Object[].class);
+		server.getKryo().register(Vector2.class);
+		server.getKryo().register(Fixture.class);
+		server.getKryo().register(FixtureDef.class);
+		server.getKryo().register(BodyDef.class);
+		server.getKryo().register(BodyType.class);
+		server.getKryo().register(Filter.class);
 		server.getKryo().register(Packet1Connect.class);
 		server.getKryo().register(Packet2Body.class);
-		server.getKryo().register(Body.class);
 		server.getKryo().register(Packet3RequestBody.class);
 		server.getKryo().register(Packet8WorldInfo.class);
 		server.getKryo().register(Packet7WorldCreation.class);
 		server.getKryo().register(Integer[][].class);
 		server.getKryo().register(Integer[].class);
+		server.getKryo().register(float[].class);
 		
 		//INITIATE THE GUI
 		Terminal terminal = new Terminal();
@@ -90,7 +110,33 @@ public class Main {
 	        			System.out.println(" PACKET BODY CONFIRMED");
 	        			packet3 = (Packet3RequestBody)object;
         				packet2 = new Packet2Body();
-        				packet2.setBody(WorldUtils.getGameWorld().bodies().get(packet3.requestedID()));
+        				if(packet3.requestedID() > WorldUtils.getGameWorld().bodies().size){
+        					packet3.setID(0);
+        				}
+        				Body requested = WorldUtils.getGameWorld().bodies().get(packet3.requestedID());
+        				BodyDef def = new BodyDef();
+        				FixtureDef fdef = new FixtureDef();
+        				fdef.density = 0.45f;//requested.getFixtureList().first().getDensity();
+        				fdef.isSensor =  false;//requested.getFixtureList().first().isSensor();
+        				fdef.friction = 1000f;//requested.getFixtureList().first().getFriction();
+        				fdef.shape = requested.getFixtureList().first().getShape();
+        				def.active = requested.isActive();
+        				def.allowSleep = requested.isSleepingAllowed();
+        				def.angle = requested.getAngle();
+        				def.angularDamping = requested.getAngularDamping();
+        				def.angularVelocity = requested.getAngularVelocity();
+        				def.awake = requested.isAwake();
+        				def.bullet = requested.isBullet();
+        				def.fixedRotation = requested.isFixedRotation();
+        				def.gravityScale = requested.getGravityScale();
+        				def.linearDamping = requested.getLinearDamping();
+        				def.position.x = requested.getPosition().x;
+        				def.position.y = requested.getPosition().y;
+        				def.linearVelocity.set(requested.getLinearVelocity());
+        				def.type = requested.getType();
+        				
+        				packet2.setBodyDef(def);
+        				packet2.setFixDef(fdef);
         				packet2.setCount(WorldUtils.getGameWorld().getWorld().getBodyCount());
         				
         				server.sendToUDP(connection.getID(), packet2);

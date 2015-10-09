@@ -30,7 +30,7 @@ public class GameWorld {
 	//CREATURE 
 	public GameWorld(int width) {
 		this.width = width;
-		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
+		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 6000, 34500);
 		this.created = true;	 
 		new Creature(getWorld(), new Location(2000,7000,0));
 		new Creature(getWorld(), new Location(2000,7010,0));
