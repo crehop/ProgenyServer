@@ -18,17 +18,8 @@ import com.badlogic.gdx.utils.Array;
 public class GameWorld {
 	public static int PPM = 100;
 	ArrayList<Chunk> worldChunk; 
-	private int activeChunks;
-	private int activeObjects;
+	private float every60 = 0;
 	private boolean created = false;
-	private int sleepWaveCount = 0;
-	private int sleepWaveCountMax = 60;
-	private int wakeWaveCount = 10;
-	private int duration = 0;
-	private int cullCount = 10;
-	private int count;
-	private int random;
-	private int bodyHibernation;
 	Random rand = new Random();
 	Integer[][] worldChunks;
 	int width;
@@ -66,7 +57,11 @@ public class GameWorld {
 		return this.yStrech;
 	}
 	public void update(float dt){
-		System.out.println("BODIES:" + this.world.getBodyCount() +"  CONTACT:" + this.world.getContactCount());
+		every60 += dt;
+		if(every60 > 60){
+			every60 = 0;
+			this.getWorld().getBodies(bodies);
+		}
 		this.getWorld().step(dt, 6, 2);
 	}
 	public World getWorld() {
@@ -74,5 +69,8 @@ public class GameWorld {
 	}
 	public void setWorld(World world) {
 		this.world = world;
+	}
+	public Array<Body> bodies(){
+		return this.bodies;
 	}
 }

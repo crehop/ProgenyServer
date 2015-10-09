@@ -1,6 +1,6 @@
 package packets;
 
-public class Packet6ChunkInformation {
+public class Packet6ChunkInformation extends Packet{
 	private float energy;
 	private float temperature;
 	private float pressure; 
