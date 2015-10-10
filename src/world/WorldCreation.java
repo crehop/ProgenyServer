@@ -1,6 +1,5 @@
 package world;
 
-import com.badlogic.gdx.physics.box2d.World;
 
 public class WorldCreation {
 	private static final int AIR = 0;

@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
+
+
 //import neuralNetwork.NeuralNet;
 import packets.Packet;
 import packets.Packet1Connect;
@@ -75,7 +77,9 @@ public class Main {
 		server.getKryo().register(float[].class);
 		
 		//INITIATE THE GUI
+		@SuppressWarnings("unused")
 		Terminal terminal = new Terminal();
+		@SuppressWarnings("unused")
 		Time time = new Time();
 		//NeuralNet asimov = new NeuralNet();
 		//asimov.activateNetwork();

@@ -1,8 +1,6 @@
 package world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Console{
 	private static boolean consoleOn = true;
@@ -16,7 +14,9 @@ public class Console{
 	private static String line8 = "8";
 	private static String line9 = "9";
 	private static String line10 = "10";
+	@SuppressWarnings("unused")
 	private static int x = 5;
+	@SuppressWarnings("unused")
 	private static int y = 5;
 	private static boolean enabled = true;
 	private static boolean initiated = false;

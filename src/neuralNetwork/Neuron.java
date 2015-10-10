@@ -12,7 +12,6 @@ public class Neuron {
 	private boolean connectedIn;
 	private int ID;
 	private float intensity;
-	private float decay = 0.03f;
 	private float computation = 0;
 	private int stagger = 0;
 

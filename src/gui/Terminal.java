@@ -2,9 +2,9 @@ package gui;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JFrame;
 
 
+@SuppressWarnings("serial")
 public class Terminal extends GUI{
 	
 	private JLabel overview;

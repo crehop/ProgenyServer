@@ -1,17 +1,11 @@
 package world;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -31,7 +25,7 @@ public class GameWorld {
 	public GameWorld(int width) {
 		this.width = width;
 		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
-		this.created = true;	 
+		this.setCreated(true);	 
 		new Creature(getWorld(), new Location(2000,8000,0));
 		new Creature(getWorld(), new Location(2000,8010,0));
 		new Creature(getWorld(), new Location(2000,8020,0));
@@ -72,5 +66,11 @@ public class GameWorld {
 	}
 	public Array<Body> bodies(){
 		return this.bodies;
+	}
+	public boolean isCreated() {
+		return created;
+	}
+	public void setCreated(boolean created) {
+		this.created = created;
 	}
 }

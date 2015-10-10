@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame {
 	
 	GridBagConstraints constraints;
