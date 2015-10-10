@@ -103,11 +103,9 @@ public class Main {
 	        			server.sendToUDP(connection.getID(), packet1);
 	        			
 	        		}else if(object instanceof Packet7WorldCreation){
-	        			System.out.println("WORLD CREATE CONFIRMED");
 	        			packet7 = new Packet7WorldCreation(WorldCreation.getChunks(), WorldCreation.getWorldWidth());
 	        			server.sendToUDP(connection.getID(), packet7);
 	        		}else if(object instanceof Packet3RequestBody){
-	        			System.out.println(" PACKET BODY CONFIRMED");
 	        			packet3 = (Packet3RequestBody)object;
         				packet2 = new Packet2Body();
         				if(packet3.requestedID() > WorldUtils.getGameWorld().bodies().size){

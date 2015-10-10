@@ -30,22 +30,22 @@ public class GameWorld {
 	//CREATURE 
 	public GameWorld(int width) {
 		this.width = width;
-		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 6000, 34500);
+		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
 		this.created = true;	 
-		new Creature(getWorld(), new Location(2000,7000,0));
-		new Creature(getWorld(), new Location(2000,7010,0));
-		new Creature(getWorld(), new Location(2000,7020,0));
-		new Creature(getWorld(), new Location(2000,7030,0));
-		new Creature(getWorld(), new Location(2000,7040,0));
-		new Creature(getWorld(), new Location(2000,7050,0));
-		new Creature(getWorld(), new Location(2000,7060,0));
-		new Creature(getWorld(), new Location(2000,7070,0));
-		new Creature(getWorld(), new Location(2000,7080,0));
-		new Creature(getWorld(), new Location(2000,7090,0));
-		new Creature(getWorld(), new Location(2000,7100,0));
-		new Creature(getWorld(), new Location(2000,7110,0));
-		new Creature(getWorld(), new Location(2000,7120,0));
-		new Creature(getWorld(), new Location(2000,7130,0));
+		new Creature(getWorld(), new Location(2000,8000,0));
+		new Creature(getWorld(), new Location(2000,8010,0));
+		new Creature(getWorld(), new Location(2000,8020,0));
+		new Creature(getWorld(), new Location(2000,8030,0));
+		new Creature(getWorld(), new Location(2000,8040,0));
+		new Creature(getWorld(), new Location(2000,8050,0));
+		new Creature(getWorld(), new Location(2000,8060,0));
+		new Creature(getWorld(), new Location(2000,8080,0));
+		new Creature(getWorld(), new Location(2000,8080,0));
+		new Creature(getWorld(), new Location(2000,8090,0));
+		new Creature(getWorld(), new Location(2000,8100,0));
+		new Creature(getWorld(), new Location(2000,8110,0));
+		new Creature(getWorld(), new Location(2000,8120,0));
+		new Creature(getWorld(), new Location(2000,8130,0));
 	}
 	public ArrayList<Chunk> getChunks(){
 		return worldChunk;
