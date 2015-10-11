@@ -75,6 +75,7 @@ public class Main {
 		server.getKryo().register(Packet7WorldCreation.class);
 		server.getKryo().register(Integer[][].class);
 		server.getKryo().register(Integer[].class);
+		server.getKryo().register(Vector2.class);
 		server.getKryo().register(float[].class);
 		
 		//INITIATE THE GUI
@@ -144,6 +145,7 @@ public class Main {
             				
             				packet2.setBodyDef(def);
             				packet2.setFixDef(fdef);
+            				packet2.setLocation(requested.getLocalCenter().x, requested.getLocalCenter().y, requested.getAngle());
             				packet2.setCount(packet3.getID());
             				if(packet3.getID() >= WorldUtils.getGameWorld().getWorld().getBodyCount()){
             					packet2.setCount(-1);
