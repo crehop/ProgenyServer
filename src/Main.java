@@ -8,6 +8,7 @@ import java.io.IOException;
 
 
 
+
 //import neuralNetwork.NeuralNet;
 import packets.Packet;
 import packets.Packet1Connect;
@@ -112,10 +113,10 @@ public class Main {
 	        		}else if(object instanceof Packet3RequestBody){
 	        			packet3 = (Packet3RequestBody)object;
         				packet2 = new Packet2Body();
-        				if(packet3.requestedID() > WorldUtils.getGameWorld().bodies().size){
-        					packet3.setID(0);
+        				if(packet3.getID() > WorldUtils.getGameWorld().bodies().size){
+        					packet3.setID(-1);
         				}
-        				Body requested = WorldUtils.getGameWorld().bodies().get(packet3.requestedID());
+        				Body requested = WorldUtils.getGameWorld().bodies().get(packet3.getID());
         				BodyDef def = new BodyDef();
         				FixtureDef fdef = new FixtureDef();
         				fdef.density = 0.45f;//requested.getFixtureList().first().getDensity();
@@ -139,8 +140,7 @@ public class Main {
         				
         				packet2.setBodyDef(def);
         				packet2.setFixDef(fdef);
-        				packet2.setCount(WorldUtils.getGameWorld().getWorld().getBodyCount());
-        				
+        				packet2.setCount(packet3.getID());
         				server.sendToUDP(connection.getID(), packet2);
 	        		}else if(object instanceof Packet7WorldCreation){
         				System.out.println("WORLD GET info PACKET  CONFIRMED");
