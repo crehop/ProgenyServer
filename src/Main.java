@@ -111,45 +111,54 @@ public class Main {
 	        			packet7 = new Packet7WorldCreation(WorldCreation.getChunks(), WorldCreation.getWorldWidth());
 	        			server.sendToUDP(connection.getID(), packet7);
 	        		}else if(object instanceof Packet3RequestBody){
-	        			packet3 = (Packet3RequestBody)object;
-        				packet2 = new Packet2Body();
-        				if(packet3.getID() > WorldUtils.getGameWorld().bodies().size){
-        					packet3.setID(-1);
+        				packet3 = (Packet3RequestBody)object;
+	        			if(packet3.getID() >= WorldUtils.getGameWorld().getWorld().getBodyCount()){
+        					packet2.setCount(-1);
+            				server.sendToUDP(connection.getID(), packet2);
+        				}else{
+        					packet3 = (Packet3RequestBody)object;
+    	        			System.out.println("CHECK" + packet3.getID());
+            				packet2 = new Packet2Body();
+            				
+            				Body requested = WorldUtils.getGameWorld().bodies().get(packet3.getID());
+            				BodyDef def = new BodyDef();
+            				FixtureDef fdef = new FixtureDef();
+            				fdef.density = 0.45f;//requested.getFixtureList().first().getDensity();
+            				fdef.isSensor =  false;//requested.getFixtureList().first().isSensor();
+            				fdef.friction = 1000f;//requested.getFixtureList().first().getFriction();
+            				fdef.shape = requested.getFixtureList().first().getShape();
+            				def.active = requested.isActive();
+            				def.allowSleep = requested.isSleepingAllowed();
+            				def.angle = requested.getAngle();
+            				def.angularDamping = requested.getAngularDamping();
+            				def.angularVelocity = requested.getAngularVelocity();
+            				def.awake = requested.isAwake();
+            				def.bullet = requested.isBullet();
+            				def.fixedRotation = requested.isFixedRotation();
+            				def.gravityScale = requested.getGravityScale();
+            				def.linearDamping = requested.getLinearDamping();
+            				def.position.x = requested.getPosition().x;
+            				def.position.y = requested.getPosition().y;
+            				def.linearVelocity.set(requested.getLinearVelocity());
+            				def.type = requested.getType();
+            				
+            				packet2.setBodyDef(def);
+            				packet2.setFixDef(fdef);
+            				packet2.setCount(packet3.getID());
+            				if(packet3.getID() >= WorldUtils.getGameWorld().getWorld().getBodyCount()){
+            					packet2.setCount(-1);
+            				}
+            				System.out.println(packet2.getID());
+            				server.sendToUDP(connection.getID(), packet2);
         				}
-        				Body requested = WorldUtils.getGameWorld().bodies().get(packet3.getID());
-        				BodyDef def = new BodyDef();
-        				FixtureDef fdef = new FixtureDef();
-        				fdef.density = 0.45f;//requested.getFixtureList().first().getDensity();
-        				fdef.isSensor =  false;//requested.getFixtureList().first().isSensor();
-        				fdef.friction = 1000f;//requested.getFixtureList().first().getFriction();
-        				fdef.shape = requested.getFixtureList().first().getShape();
-        				def.active = requested.isActive();
-        				def.allowSleep = requested.isSleepingAllowed();
-        				def.angle = requested.getAngle();
-        				def.angularDamping = requested.getAngularDamping();
-        				def.angularVelocity = requested.getAngularVelocity();
-        				def.awake = requested.isAwake();
-        				def.bullet = requested.isBullet();
-        				def.fixedRotation = requested.isFixedRotation();
-        				def.gravityScale = requested.getGravityScale();
-        				def.linearDamping = requested.getLinearDamping();
-        				def.position.x = requested.getPosition().x;
-        				def.position.y = requested.getPosition().y;
-        				def.linearVelocity.set(requested.getLinearVelocity());
-        				def.type = requested.getType();
-        				
-        				packet2.setBodyDef(def);
-        				packet2.setFixDef(fdef);
-        				packet2.setCount(packet3.getID());
-        				server.sendToUDP(connection.getID(), packet2);
+	        			
 	        		}else if(object instanceof Packet7WorldCreation){
         				System.out.println("WORLD GET info PACKET  CONFIRMED");
         				packet8 = (Packet8WorldInfo)object;
         				packet82 = new Packet8WorldInfo();
         				packet82.setWorld(WorldUtils.getGameWorld().getWorld());
         				server.sendToUDP(connection.getID(), packet8);
-        		}
-
+	        		}
 	        	}
 	        	packets++;
 	        }

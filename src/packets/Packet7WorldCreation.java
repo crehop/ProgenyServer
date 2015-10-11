@@ -1,6 +1,5 @@
 package packets;
 
-
 public class Packet7WorldCreation extends Packet {
 	Integer[][] world;
 	private boolean worldRecieved = false;

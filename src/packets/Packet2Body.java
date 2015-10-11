@@ -13,9 +13,6 @@ public class Packet2Body extends Packet{
 	public BodyDef getBodyDef(){
 		return def;
 	}
-	public int getCount() {
-		return 0;
-	}
 	public void setBodyDef(BodyDef def){
 		this.def = def;
 	}
