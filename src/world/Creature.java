@@ -29,7 +29,7 @@ public class Creature {
 		creature[0] = 1f;
 		creature[1] = 0;
 		creature[2] = 43;
-		creature[3] = 88;
+		creature[3] = 88; 
 		creature[4] = 80;
 		creature[5] = 26;
 		creature[6] = 86;

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
+
+
 //import neuralNetwork.NeuralNet;
 import packets.Packet;
 import packets.Packet1Connect;
@@ -25,7 +27,9 @@ import world.WorldUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -64,6 +68,8 @@ public class Main {
 		server.getKryo().register(Packet.class);
 		server.getKryo().register(Shape.class);
 		server.getKryo().register(CircleShape.class);
+		server.getKryo().register(ChainShape.class);
+		server.getKryo().register(EdgeShape.class);
 		server.getKryo().register(PolygonShape.class);
 		server.getKryo().register(Array.class);
 		server.getKryo().register(Object[].class);

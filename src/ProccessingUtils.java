@@ -24,8 +24,12 @@ public class ProccessingUtils {
 		def.active = requested.isActive();
 		def.linearVelocity.set(requested.getLinearVelocity());
 		def.position.set(requested.getPosition());
-		
+		FixtureDef fdef = new FixtureDef();
+		fdef.shape = requested.getFixtureList().first().getShape();
+		fdef.density = requested.getFixtureList().first().getDensity();
 		packet2.setBodyDef(def);
+		packet2.setFixDef(fdef);
+	
 		
 		return packet2;
 	}
