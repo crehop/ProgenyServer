@@ -9,6 +9,9 @@ import java.io.IOException;
 
 
 
+import java.util.HashMap;
+
+
 //import neuralNetwork.NeuralNet;
 import packets.Packet;
 import packets.Packet1Connect;
@@ -29,6 +32,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 //import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -58,6 +62,7 @@ public class Main {
 		
 		//REGISTER THE CLASS!
 		server.getKryo().register(Packet.class);
+		server.getKryo().register(Shape.class);
 		server.getKryo().register(CircleShape.class);
 		server.getKryo().register(PolygonShape.class);
 		server.getKryo().register(Array.class);
@@ -77,6 +82,7 @@ public class Main {
 		server.getKryo().register(Integer[].class);
 		server.getKryo().register(Vector2.class);
 		server.getKryo().register(float[].class);
+		HashMap<Integer,ConnectionData> connectionData = new HashMap<Integer,ConnectionData>();
 		
 		//INITIATE THE GUI
 		@SuppressWarnings("unused")
@@ -91,6 +97,8 @@ public class Main {
 	    server.addListener(new Listener() {
 	        public void received (Connection connection, Object object) {
 	        	if(object instanceof Packet){
+	        		
+	        		
 	        		if(object instanceof Packet1Connect){
 	        			packet1 = (Packet1Connect)object;
 	        			packet1.logout(true);
@@ -107,54 +115,27 @@ public class Main {
 	        		    	e.printStackTrace();
 	        		    }
 	        			server.sendToUDP(connection.getID(), packet1);
-	        			
-	        		}else if(object instanceof Packet7WorldCreation){
+	        		}
+	        		
+	        		
+	        		else if(object instanceof Packet7WorldCreation){
 	        			packet7 = new Packet7WorldCreation(WorldCreation.getChunks(), WorldCreation.getWorldWidth());
 	        			server.sendToUDP(connection.getID(), packet7);
-	        		}else if(object instanceof Packet3RequestBody){
-        				packet3 = (Packet3RequestBody)object;
-	        			if(packet3.getID() >= WorldUtils.getGameWorld().getWorld().getBodyCount()){
-        					packet2.setCount(-1);
-            				server.sendToUDP(connection.getID(), packet2);
+	        		}
+	        		
+	        		
+	        		else if(object instanceof Packet3RequestBody){
+        				if(connectionData.containsKey(connection.getID())){
+        					ConnectionData data = connectionData.get(connection.getID());
+        					server.sendToUDP(connection.getID(), ProccessingUtils.processBody(data));
         				}else{
-        					packet3 = (Packet3RequestBody)object;
-    	        			System.out.println("CHECK" + packet3.getID());
-            				packet2 = new Packet2Body();
-            				
-            				Body requested = WorldUtils.getGameWorld().bodies().get(packet3.getID());
-            				BodyDef def = new BodyDef();
-            				FixtureDef fdef = new FixtureDef();
-            				fdef.density = 0.45f;//requested.getFixtureList().first().getDensity();
-            				fdef.isSensor =  false;//requested.getFixtureList().first().isSensor();
-            				fdef.friction = 1000f;//requested.getFixtureList().first().getFriction();
-            				fdef.shape = requested.getFixtureList().first().getShape();
-            				def.active = requested.isActive();
-            				def.allowSleep = requested.isSleepingAllowed();
-            				def.angle = requested.getAngle();
-            				def.angularDamping = requested.getAngularDamping();
-            				def.angularVelocity = requested.getAngularVelocity();
-            				def.awake = requested.isAwake();
-            				def.bullet = requested.isBullet();
-            				def.fixedRotation = requested.isFixedRotation();
-            				def.gravityScale = requested.getGravityScale();
-            				def.linearDamping = requested.getLinearDamping();
-            				def.position.x = requested.getPosition().x;
-            				def.position.y = requested.getPosition().y;
-            				def.linearVelocity.set(requested.getLinearVelocity());
-            				def.type = requested.getType();
-            				
-            				packet2.setBodyDef(def);
-            				packet2.setFixDef(fdef);
-            				packet2.setLocation(requested.getLocalCenter().x, requested.getLocalCenter().y, requested.getAngle());
-            				packet2.setCount(packet3.getID());
-            				if(packet3.getID() >= WorldUtils.getGameWorld().getWorld().getBodyCount()){
-            					packet2.setCount(-1);
-            				}
-            				System.out.println(packet2.getID());
-            				server.sendToUDP(connection.getID(), packet2);
+        					connectionData.put(connection.getID(), new ConnectionData(connection.getID()));
+        					ConnectionData data = connectionData.get(connection.getID());
+        					server.sendToUDP(connection.getID(), ProccessingUtils.processBody(data));
         				}
-	        			
-	        		}else if(object instanceof Packet7WorldCreation){
+	        		}
+	        		
+	        		else if(object instanceof Packet7WorldCreation){
         				System.out.println("WORLD GET info PACKET  CONFIRMED");
         				packet8 = (Packet8WorldInfo)object;
         				packet82 = new Packet8WorldInfo();

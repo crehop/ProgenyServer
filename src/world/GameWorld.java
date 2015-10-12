@@ -26,20 +26,10 @@ public class GameWorld {
 		this.width = width;
 		WorldUtils.GenerateWorldBorder(getWorld(), 0, 23000, 7142, 34500);
 		this.setCreated(true);	 
-		new Creature(getWorld(), new Location(2000,8000,0));
-		new Creature(getWorld(), new Location(2000,8010,0));
-		new Creature(getWorld(), new Location(2000,8020,0));
-		new Creature(getWorld(), new Location(2000,8030,0));
-		new Creature(getWorld(), new Location(2000,8040,0));
-		new Creature(getWorld(), new Location(2000,8050,0));
-		new Creature(getWorld(), new Location(2000,8060,0));
-		new Creature(getWorld(), new Location(2000,8080,0));
-		new Creature(getWorld(), new Location(2000,8080,0));
-		new Creature(getWorld(), new Location(2000,8090,0));
-		new Creature(getWorld(), new Location(2000,8100,0));
-		new Creature(getWorld(), new Location(2000,8110,0));
-		new Creature(getWorld(), new Location(2000,8120,0));
-		new Creature(getWorld(), new Location(2000,8130,0));
+		new Creature(getWorld(), new Location(2002,12300,0));
+		new Creature(getWorld(), new Location(2001,12400,0));
+		new Creature(getWorld(), new Location(2000,12500,0));
+		new Creature(getWorld(), new Location(1999,12600,0));
 	}
 	public ArrayList<Chunk> getChunks(){
 		return worldChunk;
