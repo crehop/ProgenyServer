@@ -98,9 +98,7 @@ public class Main {
 		//WHEN PACKET SENT, THIS FUNCTION RUNS
 	    server.addListener(new Listener() {
 	        public void received (Connection connection, Object object) {
-        		System.out.println("" + object.toString());
 	        	if(object instanceof Packet){
-	        		System.out.println("" + object.toString());
 	        		if(object instanceof Packet1Connect){
 	        			packet1 = (Packet1Connect)object;
 	        			packet1.logout(true);

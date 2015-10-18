@@ -13,6 +13,9 @@ public class Packet2Body extends Packet{
 	public int getID(){
 		return count;
 	}
+	
+	public Packet2Body(){
+	}
 	public BodyDef getBodyDef(){
 		return def;
 	}
