@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 
 
+
 //import neuralNetwork.NeuralNet;
 import packets.Packet;
 import packets.Packet1Connect;
@@ -27,9 +28,6 @@ import world.WorldUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -66,16 +64,9 @@ public class Main {
 		
 		//REGISTER THE CLASS!
 		server.getKryo().register(Packet.class);
-		server.getKryo().register(Shape.class);
-		server.getKryo().register(CircleShape.class);
-		server.getKryo().register(ChainShape.class);
-		server.getKryo().register(EdgeShape.class);
-		server.getKryo().register(PolygonShape.class);
 		server.getKryo().register(Array.class);
 		server.getKryo().register(Object[].class);
 		server.getKryo().register(Vector2.class);
-		server.getKryo().register(Fixture.class);
-		server.getKryo().register(FixtureDef.class);
 		server.getKryo().register(BodyDef.class);
 		server.getKryo().register(BodyType.class);
 		server.getKryo().register(Filter.class);
@@ -137,7 +128,13 @@ public class Main {
         				}else{
         					connectionData.put(connection.getID(), new ConnectionData(connection.getID()));
         					ConnectionData data = connectionData.get(connection.getID());
-        					server.sendToUDP(connection.getID(), ProccessingUtils.processBody(data));
+        					packet2 = ProccessingUtils.processBody(data);
+        					System.out.println("packet2" + packet2.getID());
+        					if(packet2.getID() == -1){
+        						return;
+        					}else{
+            					server.sendToUDP(connection.getID(), packet2);
+        					}
         				}
 	        		}
 	        		
